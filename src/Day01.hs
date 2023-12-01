@@ -1,11 +1,8 @@
-module Day1
-  ( part1,
-    part2,
-  )
-where
+module Day01 (main) where
 
 import Control.Monad (void)
 import Data.Char (isLetter)
+import System.Environment (getArgs)
 import Text.Parsec (alphaNum, digit, many1, parse, string, try, (<|>))
 import Text.Parsec.String (Parser)
 
@@ -143,3 +140,10 @@ parseLine s = case (parse (many1 calibrationValue) "" s, parse (many1 calibratio
 
 part2 :: String -> String
 part2 s = show $ sum $ map (firstLast . parseLine) (lines s)
+
+main :: IO ()
+main = do
+  [dataFile] <- getArgs
+  fileContents <- readFile dataFile
+  putStrLn $ "part1 " ++ part1 fileContents
+  putStrLn $ "part2 " ++ part2 fileContents

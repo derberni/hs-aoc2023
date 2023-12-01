@@ -23,48 +23,12 @@ source-repository head
   type: git
   location: https://github.com/derberni/hs-aoc2023
 
-library
-  exposed-modules:
-      Day1
-  other-modules:
-      Paths_hs_aoc2023
-  autogen-modules:
-      Paths_hs_aoc2023
+executable day01
+  main-is: Day01.hs
   hs-source-dirs:
       src
-  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints
+  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -main-is Day01
   build-depends:
       base >=4.7 && <5
-    , parsec
-  default-language: Haskell2010
-
-executable hs-aoc2023-exe
-  main-is: Main.hs
-  other-modules:
-      Paths_hs_aoc2023
-  autogen-modules:
-      Paths_hs_aoc2023
-  hs-source-dirs:
-      app
-  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
-  build-depends:
-      base >=4.7 && <5
-    , hs-aoc2023
-    , parsec
-  default-language: Haskell2010
-
-test-suite hs-aoc2023-test
-  type: exitcode-stdio-1.0
-  main-is: Spec.hs
-  other-modules:
-      Paths_hs_aoc2023
-  autogen-modules:
-      Paths_hs_aoc2023
-  hs-source-dirs:
-      test
-  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
-  build-depends:
-      base >=4.7 && <5
-    , hs-aoc2023
     , parsec
   default-language: Haskell2010
