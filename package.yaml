@@ -49,3 +49,8 @@ executables:
     source-dirs:     src
     main:            Day03
     other-modules:   []    
+
+  day04:
+    source-dirs:     src
+    main:            Day04
+    other-modules:   []   
