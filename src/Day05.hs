@@ -7,7 +7,7 @@ import Text.Parsec.String (Parser)
 
 -- Types --
 
-data Range = Range Int Int Int deriving (Show)
+data Range = Range Int Int deriving (Show)
 
 -- Parser --
 
@@ -17,16 +17,16 @@ int = read <$> many1 digit
 seeds :: Parser [Int]
 seeds = string "seeds: " *> int `sepBy` char ' '
 
-range :: Parser Range
+range :: Parser (Range, Range)
 range = do
-  f <- int
-  void space
   t <- int
   void space
+  f <- int
+  void space
   r <- int
-  pure $ Range f t r
+  pure (Range f r, Range t r)
 
-parseRangeMaps :: Parser [Range]
+parseRangeMaps :: Parser [(Range, Range)]
 parseRangeMaps = do
   void $ many1 letter
   void $ string "-to-"
@@ -34,7 +34,7 @@ parseRangeMaps = do
   void $ string " map:\n"
   range `sepEndBy` endOfLine
 
-parseInput :: Parser ([Int], [[Range]])
+parseInput :: Parser ([Int], [[(Range, Range)]])
 parseInput = do
   s <- seeds
   spaces
@@ -43,20 +43,17 @@ parseInput = do
 
 -- Part 1 --
 
-mapByRange :: Int -> [Range] -> Int
+mapByRange :: Int -> [(Range, Range)] -> Int
 mapByRange i [] = i
-mapByRange i (Range t f r : rs) = let d = i - f in if d >= 0 && d < r then t + d else mapByRange i rs
+mapByRange i ((Range f r, Range t _) : rs) = let d = i - f in if d >= 0 && d < r then t + d else mapByRange i rs
 
-mapRM :: Int -> [[Range]] -> Int
-mapRM i [rs] = mapByRange i rs
-mapRM i (rs : rms) = mapRM (mapByRange i rs) rms
-
-minimumLocation :: ([Int], [[Range]]) -> Int
-minimumLocation (s, r) = minimum $ map go s
+minimumLocation :: ([Int], [[(Range, Range)]]) -> Int
+minimumLocation (s, r) = minimum $ map (go r) s
   where
-    go i = mapRM i r
+    go [rs] i = mapByRange i rs
+    go (rs : rms) i = go rms (mapByRange i rs)
 
-part1 :: ([Int], [[Range]]) -> String
+part1 :: ([Int], [[(Range, Range)]]) -> String
 part1 = show . minimumLocation
 
 -- Part 2 --
@@ -66,7 +63,7 @@ expandSeeds [] = []
 expandSeeds [_] = []
 expandSeeds (start : num : ss) = take num (iterate (+ 1) start) ++ expandSeeds ss
 
-part2 :: ([Int], [[Range]]) -> String
+part2 :: ([Int], [[(Range, Range)]]) -> String
 part2 (s, r) = show $ minimumLocation (expandSeeds s, r)
 
 -- Main --
