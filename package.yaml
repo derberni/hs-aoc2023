@@ -59,3 +59,13 @@ executables:
     source-dirs:     src
     main:            Day05
     other-modules:   []  
+
+  day06:
+    source-dirs:     src
+    main:            Day06
+    other-modules:   []  
+  
+  day07:
+    source-dirs:     src
+    main:            Day07
+    other-modules:   []  
