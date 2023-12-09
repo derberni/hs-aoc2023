@@ -92,3 +92,13 @@ executable day07
       base >=4.7 && <5
     , parsec
   default-language: Haskell2010
+
+executable day09
+  main-is: Day09.hs
+  hs-source-dirs:
+      src
+  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -main-is Day09
+  build-depends:
+      base >=4.7 && <5
+    , parsec
+  default-language: Haskell2010
